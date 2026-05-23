@@ -1,0 +1,55 @@
+binds {
+    Mod+Space                           { spawn "dms" "ipc" "launcher" "toggle"; }// ─── Core Basics (Launchers & Closing) ───
+    Mod+Return                          { spawn "alacritty"; }
+    // CachyOS / Noctalia Default Launcher
+    Mod+D                               { spawn "qs" "-c" "noctalia-shell" "ipc" "call" "launcher" "toggle"; }
+    Mod+Q                               { close-window; }
+    // ─── App Shortcuts ───
+    Mod+G                               { spawn "google-chrome-stable"; }
+    Mod+M                               { spawn "youtube-music-desktop-app"; }
+    Mod+K                               { spawn "kdeconnect-app"; }
+    // ─── Layout Controls ───
+    Mod+CTRL+F                          { expand-column-to-available-width; }
+    Mod+C                               { center-column; }
+    Mod+CTRL+C                          { center-visible-columns; }
+    Mod+Minus                           { set-column-width "-10%"; }
+    Mod+Equal                           { set-column-width "+10%"; }
+    Mod+Shift+Minus                     { set-window-height "-10%"; }
+    Mod+Shift+Equal                     { set-window-height "+10%"; }
+    // ─── Windows-Style Movement & Focus ───
+    Mod+Left                            { focus-column-left; }
+    Mod+Right                           { focus-column-right; }
+    Mod+Up                              { focus-window-up; }
+    Mod+Down                            { focus-window-down; }
+    Mod+Shift+Left                      { move-column-left; }
+    Mod+Shift+Right                     { move-column-right; }
+    Mod+Shift+Up                        { move-window-up; }
+    Mod+Shift+Down                      { move-window-down; }
+    // ─── Modes ───
+    Mod+T                               { toggle-window-floating; }
+    Mod+F                               { fullscreen-window; }
+    Mod+W                               { toggle-column-tabbed-display; }
+    // ─── Screenshots (With Satty UI & Dell Latitude PrtScr Key) ───
+    Print                               { spawn "sh" "-c" "grim -g \"$(slurp)\" - | satty --filename -"; }
+    Mod+Print                           { spawn "sh" "-c" "grim - | satty --filename -"; }
+    Mod+Shift+Print                     { spawn "sh" "-c" "grim -g \"$(slurp)\" ~/Pictures/$(date +'%Y%m%d_%H%M%S').png"; }
+    // ─── Lock Screen ───
+    Mod+L                               { spawn "loginctl" "lock-session"; }
+    // ─── Dell Latitude Hardware Keys (Fn Row) ───
+    XF86AudioRaiseVolume allow-when-locked=true { spawn "wpctl" "set-volume" "-l" "1.0" "@DEFAULT_AUDIO_SINK@" "5%+"; }
+    XF86AudioLowerVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "5%-"; }
+    XF86AudioMute        allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"; }
+    XF86AudioMicMute     allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"; }
+    XF86AudioPlay        allow-when-locked=true { spawn "playerctl" "play-pause"; }
+    XF86AudioStop        allow-when-locked=true { spawn "playerctl" "stop"; }
+    XF86AudioNext        allow-when-locked=true { spawn "playerctl" "next"; }
+    XF86AudioPrev        allow-when-locked=true { spawn "playerctl" "previous"; }
+    XF86MonBrightnessUp   allow-when-locked=true { spawn "brightnessctl" "set" "5%+"; }
+    XF86MonBrightnessDown allow-when-locked=true { spawn "brightnessctl" "set" "5%-"; }
+    // ─── Emergency Escape Key ───
+    Mod+ESCAPE allow-inhibiting=false   { toggle-keyboard-shortcuts-inhibit; }
+    // ─── Exit / Power ───
+    CTRL+ALT+Delete                     { quit; }
+    Mod+Shift+P                         { power-off-monitors; }
+    Mod+O repeat=false                  { toggle-overview; }
+}
