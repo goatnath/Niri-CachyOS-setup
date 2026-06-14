@@ -5,9 +5,7 @@ binds {
     Mod+D                               { spawn "qs" "-c" "noctalia-shell" "ipc" "call" "launcher" "toggle"; }
     Mod+Q                               { close-window; }
     // ─── App Shortcuts ───
-    Mod+V                               { spawn "vivaldi"; }
-    Mod+B                               { spawn "firefox"; }
-    Mod+X                               { spawn "firefox"; }
+    Mod+Z                               { spawn "zen-browser"; }
     Mod+1                               { spawn "nautilus"; }
     Mod+M                               { spawn "youtube-music-desktop-app"; }
     Mod+K                               { spawn "kdeconnect-app"; }
@@ -36,6 +34,8 @@ binds {
     Print                               { spawn "dms" "screenshot"; }
     Mod+Print                           { spawn "dms" "screenshot" "full"; }
     Mod+Shift+Print                     { spawn "dms" "screenshot" "last"; }
+    // ─── Screen Recording (wf-recorder) ───
+    Mod+Shift+R                         { spawn "bash" "-c" "pkill wf-recorder || wf-recorder -g \"$(slurp)\" -f ~/Videos/recording-$(date +%Y%m%d-%H%M%S).mp4"; }
     // ─── Lock Screen ───
     Mod+L                               { spawn "loginctl" "lock-session"; }
     // ─── Dell Latitude Hardware Keys (Fn Row) ───
@@ -47,8 +47,16 @@ binds {
     XF86AudioStop        allow-when-locked=true { spawn "playerctl" "stop"; }
     XF86AudioNext        allow-when-locked=true { spawn "playerctl" "next"; }
     XF86AudioPrev        allow-when-locked=true { spawn "playerctl" "previous"; }
-    XF86MonBrightnessUp   allow-when-locked=true { spawn "brightnessctl" "set" "5%+"; }
-    XF86MonBrightnessDown allow-when-locked=true { spawn "brightnessctl" "set" "5%-"; }
+    XF86MonBrightnessUp   allow-when-locked=true { spawn "sh" "-c" "dms brightness set backlight:intel_backlight $(( $(dms brightness get backlight:intel_backlight | awk '{print $2}' | tr -d '%') + 5 ))%"; }
+    XF86MonBrightnessDown allow-when-locked=true { spawn "sh" "-c" "dms brightness set backlight:intel_backlight $(( $(dms brightness get backlight:intel_backlight | awk '{print $2}' | tr -d '%') - 5 ))%"; }
+    XF86KbdBrightnessUp  allow-when-locked=true { spawn "sh" "-c" "current=$(dms brightness get leds:dell::kbd_backlight | awk '{print $3}' | tr -d '()' | cut -d'/' -f1); if [ \"$current\" = \"0\" ]; then dms brightness set leds:dell::kbd_backlight 75%; elif [ \"$current\" = \"1\" ]; then dms brightness set leds:dell::kbd_backlight 100%; else dms brightness set leds:dell::kbd_backlight 0%; fi"; }
+    XF86KbdLightOnOff    allow-when-locked=true { spawn "sh" "-c" "current=$(dms brightness get leds:dell::kbd_backlight | awk '{print $3}' | tr -d '()' | cut -d'/' -f1); if [ \"$current\" = \"0\" ]; then dms brightness set leds:dell::kbd_backlight 75%; elif [ \"$current\" = \"1\" ]; then dms brightness set leds:dell::kbd_backlight 100%; else dms brightness set leds:dell::kbd_backlight 0%; fi"; }
+    XF86Display           { power-off-monitors; }
+    XF86Search           allow-when-locked=true { spawn "dms" "ipc" "launcher" "toggle"; }
+    XF86Sleep            allow-when-locked=true { spawn "systemctl" "suspend"; }
+    XF86Suspend          allow-when-locked=true { spawn "systemctl" "suspend"; }
+    XF86WLAN             allow-when-locked=true { spawn "nmcli" "radio" "wifi" "toggle"; }
+    XF86RFKill           allow-when-locked=true { spawn "nmcli" "radio" "wifi" "toggle"; }
     // ─── Emergency Escape Key ───
     Mod+ESCAPE allow-inhibiting=false   { toggle-keyboard-shortcuts-inhibit; }
     // ─── Exit / Power ───

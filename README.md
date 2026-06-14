@@ -42,13 +42,26 @@ Start Niri.
 |-----|--------|
 | `Mod+Return` | Open Alacritty |
 | `Mod+Space` | Toggle DMS launcher |
-| `Mod+V` | Open Vivaldi |
+| `Mod+Z` | Open Zen Browser |
 | `Mod+Q` | Close window |
 | `Mod+F` | Fullscreen |
 | `Mod+T` | Toggle floating |
 | `Mod+L` | Lock screen |
 | `Mod+O` | Toggle overview |
+| `Mod+Shift+R` | Screen recording (wf-recorder) |
 | `Mod+Arrow keys` | Focus window |
 | `Mod+Shift+Arrow keys` | Move window |
 | `Print` | Screenshot |
 | `Mod+Print` | Full screenshot |
+
+## Additional Packages
+
+You can install the packages configured recently in the keybinds using your package manager and AUR helper:
+
+```bash
+# Screen recording tools (pacman)
+sudo pacman -S wf-recorder slurp
+
+# Browser (AUR)
+yay -S zen-browser-bin
+```
